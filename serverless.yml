@@ -1,4 +1,4 @@
-service: TEMPLATE
+service: china-website
 
 frameworkVersion: "3"
 plugins:
@@ -13,7 +13,7 @@ custom:
     staging:
       domain: ""
     prod:
-      domain: ${env:PROD_DOMAIN, 'TEMPLATE.stsites.dev'}
+      domain: ${env:PROD_DOMAIN, 'china-website.stsites.dev'}
       certificate: ${env:ACM_CERTIFICATE_ARN, ''}
 
 constructs:

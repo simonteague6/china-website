@@ -1,0 +1,219 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #f7f5f0;
+  color: #2c2c2c;
+  line-height: 1.5;
+}
+
+.site-header {
+  text-align: center;
+  padding: 2.5rem 1rem 1.5rem;
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  margin: 0.5rem 0 0;
+  color: #6b6b6b;
+  font-size: 1.05rem;
+}
+
+.timeline {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e0dcd5;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 48px;
+  margin-bottom: 1.25rem;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #b94530;
+  border: 2px solid #f7f5f0;
+  z-index: 1;
+}
+
+.timeline-travel::before {
+  left: 21px;
+  top: 12px;
+  width: 8px;
+  height: 8px;
+  background: #9e9e9e;
+}
+
+.travel-label {
+  padding: 0.4rem 0;
+  color: #7a7a7a;
+  font-size: 0.9rem;
+}
+
+.travel-date {
+  font-weight: 600;
+  margin-right: 0.5rem;
+  font-variant-numeric: tabular-nums;
+  color: #5a5a5a;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eceae6;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.city-name {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.city-dates {
+  font-size: 0.9rem;
+  color: #6b6b6b;
+  margin-top: 0.15rem;
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: #8a8a8a;
+  background: #f7f5f0;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.75rem;
+}
+
+.notes-list li {
+  padding: 0.2rem 0;
+  font-size: 0.95rem;
+  color: #3a3a3a;
+}
+
+.notes-list li::before {
+  content: "•";
+  color: #b94530;
+  margin-right: 0.5rem;
+  font-weight: 700;
+}
+
+.empty-state {
+  font-size: 0.9rem;
+  color: #9e9e9e;
+  font-style: italic;
+  margin: 0 0 0.75rem;
+}
+
+.empty-state code {
+  background: #f0eeea;
+  padding: 0.1rem 0.3rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #6b6b6b;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.link-pill {
+  display: inline-block;
+  padding: 0.3rem 0.7rem;
+  background: #fff8f6;
+  color: #b94530;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #f0e0dc;
+  transition: background 0.15s;
+}
+
+.link-pill:hover {
+  background: #f0e0dc;
+}
+
+.map {
+  height: 180px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #eceae6;
+  background: #f0eeea;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 1rem;
+  color: #9e9e9e;
+  font-size: 0.85rem;
+}
+
+.site-footer code {
+  background: #eae8e3;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #5a5a5a;
+}
+
+@media (min-width: 640px) {
+  .site-header h1 {
+    font-size: 2.5rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+
+  .map {
+    height: 220px;
+  }
+}
