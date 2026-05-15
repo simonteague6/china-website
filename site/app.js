@@ -4,19 +4,23 @@
 
 const DATA_URL = "data.json";
 
-// ---- Link type icons & labels ----
+// ---- Link type icons (Lucide) ----
 const LINK_META = {
-  maps:       { icon: "🗺️", label: "Maps" },
-  instagram:  { icon: "📸", label: "Instagram" },
-  website:    { icon: "🌐", label: "Website" },
-  menu:       { icon: "📋", label: "Menu" },
-  booking:    { icon: "🎫", label: "Book" },
-  youtube:    { icon: "▶️", label: "YouTube" },
-  dianping:   { icon: "⭐", label: "Dianping" },
+  maps:       { icon: "map", label: "Maps" },
+  instagram:  { icon: "camera", label: "Instagram" },
+  website:    { icon: "globe", label: "Website" },
+  menu:       { icon: "clipboard-list", label: "Menu" },
+  booking:    { icon: "ticket", label: "Book" },
+  youtube:    { icon: "play", label: "YouTube" },
+  dianping:   { icon: "star", label: "Dianping" },
 };
 
 function linkMeta(type) {
-  return LINK_META[type] || { icon: "🔗", label: type };
+  return LINK_META[type] || { icon: "link", label: type };
+}
+
+function icon(name, size) {
+  return `<i data-lucide="${name}" style="width:${size||16}px;height:${size||16}px;"></i>`;
 }
 
 // ---- State ----
@@ -26,7 +30,6 @@ let currentView = "ideas";
 
 // ---- Init ----
 async function init() {
-  // Navigation must work regardless of data loading
   setupNavigation();
 
   try {
@@ -39,6 +42,7 @@ async function init() {
   renderCityFilters();
   renderIdeas();
   renderLogistics();
+  lucide.createIcons();
 }
 
 // ---- Navigation ----
@@ -47,15 +51,22 @@ function setupNavigation() {
   const drawer = document.getElementById("drawer");
   const overlay = document.getElementById("drawer-overlay");
 
+  // Set initial hamburger icon
+  hamburger.innerHTML = icon("menu", 22);
+
   function open() {
     hamburger.classList.add("open");
     drawer.classList.add("open");
     overlay.classList.add("open");
+    hamburger.innerHTML = icon("x", 22);
+    lucide.createIcons();
   }
   function close() {
     hamburger.classList.remove("open");
     drawer.classList.remove("open");
     overlay.classList.remove("open");
+    hamburger.innerHTML = icon("menu", 22);
+    lucide.createIcons();
   }
 
   hamburger.addEventListener("click", () => {
@@ -79,8 +90,6 @@ function switchView(view) {
   document.querySelectorAll(".drawer-link").forEach(l => {
     l.classList.toggle("active", l.dataset.view === view);
   });
-
-  // Show/hide city filters
   const filters = document.getElementById("city-filters");
   filters.style.display = view === "ideas" ? "flex" : "none";
 }
@@ -88,13 +97,18 @@ function switchView(view) {
 // ---- City filter pills ----
 function renderCityFilters() {
   const container = document.getElementById("city-filters");
+  // Show unique city names (merge shanghai and shanghai-2)
+  const seen = new Set();
   data.cities.forEach(city => {
+    const baseName = city.id.replace(/-\\d+$/, "");
+    if (seen.has(baseName)) return;
+    seen.add(baseName);
     const btn = document.createElement("button");
     btn.className = "city-pill";
-    btn.dataset.city = city.id;
+    btn.dataset.city = baseName;
     btn.textContent = city.name;
     btn.addEventListener("click", () => {
-      currentCity = city.id;
+      currentCity = baseName;
       document.querySelectorAll(".city-pill").forEach(p => p.classList.remove("active"));
       btn.classList.add("active");
       renderIdeas();
@@ -117,16 +131,21 @@ function renderIdeas() {
   const feed = document.getElementById("idea-feed");
   feed.innerHTML = "";
 
+  // Filter: shanghai matches both shanghai and shanghai-2 ideas
   const filtered = currentCity === "all"
     ? data.ideas
-    : data.ideas.filter(i => i.city === currentCity);
+    : data.ideas.filter(i => {
+        const base = i.city.replace(/-\\d+$/, "");
+        return base === currentCity;
+      });
 
   if (filtered.length === 0) {
-    const cityName = currentCity === "all" ? "any city" : data.cities.find(c => c.id === currentCity)?.name || currentCity;
+    const cityObj = currentCity === "all" ? null : data.cities.find(c => c.id.replace(/-\\d+$/, "") === currentCity);
+    const cityName = cityObj ? cityObj.name : currentCity;
     feed.innerHTML = `
       <div class="empty-state">
         <h3>No ideas yet</h3>
-        <p>Nothing saved for ${cityName}. Ideas will show up here once added.</p>
+        <p>Nothing saved for ${currentCity === "all" ? "this trip" : cityName}. Ideas will show up here once added.</p>
       </div>
     `;
     return;
@@ -137,8 +156,8 @@ function renderIdeas() {
     card.className = "idea-card";
 
     const imgHtml = idea.photo
-      ? `<img class="idea-card-img" src="images/${escapeHtml(idea.photo)}" alt="${escapeHtml(idea.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="idea-card-img" style="display:none;align-items:center;justify-content:center;color:var(--text-dim);font-size:2rem;background:var(--bg-pill);">📍</div>`
-      : `<div class="idea-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:2rem;background:var(--bg-pill);">📍</div>`;
+      ? `<img class="idea-card-img" src="images/${escapeHtml(idea.photo)}" alt="${escapeHtml(idea.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="idea-card-img" style="display:none;align-items:center;justify-content:center;background:var(--bg-pill);">${icon("image", 32)}</div>`
+      : `<div class="idea-card-img" style="display:flex;align-items:center;justify-content:center;background:var(--bg-pill);">${icon("image", 32)}</div>`;
 
     const noteHtml = idea.note
       ? `<p class="idea-card-note">${escapeHtml(idea.note)}</p>`
@@ -147,7 +166,7 @@ function renderIdeas() {
     const linksHtml = (idea.links || []).length
       ? `<div class="idea-card-links">${idea.links.map(l => {
           const meta = linkMeta(l.type);
-          return `<a class="idea-link-pill" href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${meta.icon} ${meta.label}</a>`;
+          return `<a class="idea-link-pill" href="${escapeHtml(l.url)}" target="_blank" rel="noopener">${icon(meta.icon, 14)} ${meta.label}</a>`;
         }).join("")}</div>`
       : "";
 
@@ -161,6 +180,8 @@ function renderIdeas() {
     `;
     feed.appendChild(card);
   });
+
+  lucide.createIcons();
 }
 
 // ---- Logistics (day-by-day) ----
@@ -168,7 +189,6 @@ function renderLogistics() {
   const container = document.getElementById("logistics-content");
   container.innerHTML = "";
 
-  // Build day-by-day structure from May 18 to Jun 1
   const start = new Date("2026-05-18");
   const end = new Date("2026-06-01");
   const days = [];
@@ -186,11 +206,10 @@ function renderLogistics() {
 
     const entries = [];
 
-    // Find flights for this day
-    // Outbound: May 18
+    // Outbound flight: May 18
     if (dateStr === "2026-05-18" && data.flights.outbound) {
       entries.push({
-        icon: "✈️",
+        icon: "plane",
         title: `Fly: ${data.flights.outbound.label}`,
         detail: `${data.flights.outbound.segments[0].depart} — arrives ${data.flights.outbound.arriveDate} at ${data.flights.outbound.segments[data.flights.outbound.segments.length-1].arrive}`,
         type: "flight",
@@ -198,10 +217,10 @@ function renderLogistics() {
       });
     }
 
-    // Return: Jun 1
+    // Return flight: Jun 1
     if (dateStr === "2026-06-01" && data.flights.return) {
       entries.push({
-        icon: "✈️",
+        icon: "plane",
         title: `Fly home: ${data.flights.return.label}`,
         detail: `${data.flights.return.segments[0].depart} — arrives ${data.flights.return.segments[data.flights.return.segments.length-1].arrive}`,
         type: "flight",
@@ -209,28 +228,27 @@ function renderLogistics() {
       });
     }
 
-    // Find trains for this day
+    // Trains
     const dayTrains = (data.trains || []).filter(t => t.date === dateStr);
     dayTrains.forEach(train => {
       const timeStr = train.depart ? `Departs ${train.depart}` : "Time TBC";
       const arriveStr = train.arrive ? `Arrives ${train.arrive}` : "";
       entries.push({
-        icon: "🚄",
+        icon: "train-front",
         title: `${train.from} → ${train.to}`,
         detail: [timeStr, arriveStr, train.train ? `Train ${train.train}` : "", train.seat ? `Seat ${train.seat}` : ""].filter(Boolean).join(" · "),
         past: train.status === "completed",
-        upcoming: train.status !== "completed",
       });
     });
 
-    // Find hotels checking in/out this day
+    // Hotels
     const hotelsIn = (data.hotels || []).filter(h => h.checkin === dateStr);
     const hotelsOut = (data.hotels || []).filter(h => h.checkout === dateStr);
 
     hotelsIn.forEach(h => {
-      const city = data.cities.find(c => c.id === h.city);
+      const city = data.cities.find(c => c.id === h.city || h.city.startsWith(c.id));
       entries.push({
-        icon: "🏨",
+        icon: "building",
         title: `Check in: ${h.name}`,
         detail: `${city ? city.name : h.city} · until ${formatDate(h.checkout)}${h.link ? ` · <a href="${h.link}" target="_blank" rel="noopener" style="color:var(--accent)">View</a>` : ""}`,
       });
@@ -238,39 +256,39 @@ function renderLogistics() {
 
     hotelsOut.forEach(h => {
       entries.push({
-        icon: "🏨",
+        icon: "building",
         title: `Check out: ${h.name}`,
         detail: h.city,
       });
     });
 
-    // Find travel days
+    // Travel days
     const travel = (data.travelDays || []).find(t => t.date === dateStr);
     if (travel) {
       entries.push({
-        icon: "🚄",
+        icon: "train-front",
         title: travel.label,
         detail: travel.detail,
       });
     }
 
-    // City context
-    const cityForDay = findCityForDay(dateStr);
-    if (cityForDay && entries.length === 0) {
-      const cityNights = cityForDay.nights > 1 ? `${cityForDay.nights} nights` : "1 night";
-      entries.push({
-        icon: "📍",
-        title: `${cityForDay.name}${cityForDay.nameZh ? ` ${cityForDay.nameZh}` : ""}`,
-        detail: cityForDay.vibe || `Staying in ${cityForDay.name} (${cityNights})`,
-      });
+    // City context (where are we sleeping tonight?)
+    const cityId = findCityForDay(dateStr);
+    if (cityId) {
+      const city = data.cities.find(c => c.id === cityId);
+      if (city && entries.length === 0) {
+        entries.push({
+          icon: "map-pin",
+          title: `${city.name}${city.nameZh ? ` ${city.nameZh}` : ""}`,
+          detail: city.vibe || `Staying in ${city.name}`,
+        });
+      }
     }
 
     if (entries.length === 0) return;
 
     const group = document.createElement("div");
     group.className = "day-group";
-
-    const pastClass = day < new Date() ? "past" : "";
 
     group.innerHTML = `
       <div class="day-group-header">
@@ -280,7 +298,7 @@ function renderLogistics() {
       <div class="day-group-body">
         ${entries.map(e => `
           <div class="log-entry ${e.past ? 'past' : ''}">
-            <div class="log-entry-icon">${e.icon}</div>
+            <div class="log-entry-icon">${icon(e.icon, 18)}</div>
             <div class="log-entry-info">
               <div class="log-entry-title">${e.title}</div>
               ${e.detail ? `<div class="log-entry-detail">${e.detail}</div>` : ""}
@@ -293,8 +311,9 @@ function renderLogistics() {
     container.appendChild(group);
   });
 
-  // Emergency section at the bottom
+  // Emergency section
   container.appendChild(renderEmergency());
+  lucide.createIcons();
 }
 
 function renderFlightVisual(flight) {
@@ -302,7 +321,7 @@ function renderFlightVisual(flight) {
 
   const segmentsHtml = flight.segments.map((seg, i) => `
     <div class="flight-segment">
-      <div class="flight-segment-icon">✈️</div>
+      <div class="flight-segment-icon">${icon("plane", 18)}</div>
       <div class="flight-segment-route">
         <span class="code">${escapeHtml(seg.from)}</span>
         <span class="arrow">→</span>
@@ -315,7 +334,7 @@ function renderFlightVisual(flight) {
     </div>
     ${flight.layovers && flight.layovers[i] ? `
       <div class="flight-layover">
-        ⏳ ${escapeHtml(flight.layovers[i].duration)} layover in ${escapeHtml(flight.layovers[i].at)}
+        ${icon("clock", 14)} ${escapeHtml(flight.layovers[i].duration)} layover in ${escapeHtml(flight.layovers[i].at)}
       </div>
     ` : ""}
   `).join("");
@@ -339,7 +358,6 @@ function renderEmergency() {
         <div class="emergency-card">
           <div class="emergency-card-label">US Embassy</div>
           <div class="emergency-card-value">${escapeHtml(em.usEmbassy.phone)}</div>
-          <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.15rem;">${escapeHtml(em.usEmbassy.address || "")}</div>
         </div>
       ` : ""}
       <div class="emergency-card">
@@ -359,26 +377,24 @@ function renderEmergency() {
 }
 
 function findCityForDay(dateStr) {
-  // Map date to city based on itinerary
+  // Each day maps to the city we're sleeping in that night
   const mapping = {
     "2026-05-18": "shanghai",
     "2026-05-19": "shanghai",
     "2026-05-20": "shanghai",
-    "2026-05-21": null, // travel
+    "2026-05-21": "zhangjiajie",   // travel + arrive, sleep here
     "2026-05-22": "zhangjiajie",
     "2026-05-23": "zhangjiajie",
-    "2026-05-24": null, // travel
+    "2026-05-24": "chongqing",     // travel + arrive, sleep here
     "2026-05-25": "chongqing",
-    "2026-05-26": null, // travel
+    "2026-05-26": "xian",          // travel + arrive, sleep here
     "2026-05-27": "xian",
-    "2026-05-28": null, // travel
+    "2026-05-28": "beijing",       // travel + arrive, sleep here
     "2026-05-29": "beijing",
-    "2026-05-30": "beijing",
-    "2026-05-31": "shanghai",
+    "2026-05-30": "shanghai-2",    // travel + arrive, sleep here
+    "2026-05-31": "shanghai-2",
   };
-  const cityId = mapping[dateStr];
-  if (!cityId) return null;
-  return data.cities.find(c => c.id === cityId);
+  return mapping[dateStr] || null;
 }
 
 function formatDate(dateStr) {
