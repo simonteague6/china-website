@@ -127,3 +127,29 @@ node scripts/trip.js set flight --direction outbound|return --segments '[...]'
 
 ## The old site
 The previous AI-generated site (`site/index.html`, `site/styles.css`, `site/app.js`) is being completely replaced. Nothing from it should survive. The old content was AI-generated filler. The itinerary plan was the only good part, and even that had issues with travel day representation.
+
+## Knowledge system
+
+The `knowledge/` directory contains persistent memory files that the agent must proactively maintain across sessions. This directory is **gitignored** (may contain sensitive info like flight confirmation numbers).
+
+### Files to maintain
+- `knowledge/decisions.md` — architecture and design decisions
+- `knowledge/progress.md` — what's built, bugs fixed, what's remaining
+- `knowledge/details.md` — trip specifics: people, flights, itinerary, emergency info
+- `knowledge/workflow.md` — how to add content, deploy, manage the project
+
+### When to update
+**Always start each session by reading these files.** Then proactively update them when:
+- New design decisions are made
+- Bugs are found and fixed
+- Content is added via the CLI
+- Workflow changes
+- Trip details change (new hotels, train bookings, itinerary shifts)
+- Progress is made on TODO items
+
+### CRITICAL RULES
+1. Read `knowledge/*.md` at session start
+2. Update relevant files immediately after any change
+3. Keep `knowledge/progress.md` TODO list current
+4. When user says "update your memory" or similar, refresh all knowledge files
+5. The knowledge files are the agent's memory — without them, context is lost between sessions
