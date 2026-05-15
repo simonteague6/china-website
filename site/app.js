@@ -179,9 +179,6 @@ function renderLogistics() {
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  // Flights section first
-  container.appendChild(renderFlightsSection());
-
   days.forEach(day => {
     const dateStr = day.toISOString().slice(0, 10);
     const dayName = dayNames[day.getUTCDay()];
@@ -260,10 +257,11 @@ function renderLogistics() {
     // City context
     const cityForDay = findCityForDay(dateStr);
     if (cityForDay && entries.length === 0) {
+      const cityNights = cityForDay.nights > 1 ? `${cityForDay.nights} nights` : "1 night";
       entries.push({
         icon: "📍",
         title: `${cityForDay.name}${cityForDay.nameZh ? ` ${cityForDay.nameZh}` : ""}`,
-        detail: cityForDay.vibe || `${cityForDay.nights} night${cityForDay.nights > 1 ? "s" : ""} here`,
+        detail: cityForDay.vibe || `Staying in ${cityForDay.name} (${cityNights})`,
       });
     }
 
@@ -297,30 +295,6 @@ function renderLogistics() {
 
   // Emergency section at the bottom
   container.appendChild(renderEmergency());
-}
-
-function renderFlightsSection() {
-  const section = document.createElement("div");
-
-  // Outbound
-  if (data.flights.outbound) {
-    const f = data.flights.outbound;
-    section.innerHTML += `
-      <div class="section-header">Flights — Outbound</div>
-      ${renderFlightVisual(f)}
-    `;
-  }
-
-  // Return
-  if (data.flights.return) {
-    const f = data.flights.return;
-    section.innerHTML += `
-      <div class="section-header" style="margin-top:1rem;">Flights — Return</div>
-      ${renderFlightVisual(f)}
-    `;
-  }
-
-  return section;
 }
 
 function renderFlightVisual(flight) {

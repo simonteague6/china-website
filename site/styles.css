@@ -93,20 +93,20 @@ body {
 .drawer {
   position: fixed;
   top: 0;
-  left: -280px;
+  right: -280px;
   width: 260px;
   height: 100%;
   height: 100dvh;
   background: var(--drawer-bg);
   z-index: 150;
-  transition: left 0.25s ease;
-  border-right: 1px solid var(--border);
+  transition: right 0.25s ease;
+  border-left: 1px solid var(--border);
   display: flex;
   flex-direction: column;
 }
 
 .drawer.open {
-  left: 0;
+  right: 0;
 }
 
 .drawer-inner {
