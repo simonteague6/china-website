@@ -26,6 +26,9 @@ let currentView = "ideas";
 
 // ---- Init ----
 async function init() {
+  // Navigation must work regardless of data loading
+  setupNavigation();
+
   try {
     const res = await fetch(DATA_URL);
     data = await res.json();
@@ -36,7 +39,6 @@ async function init() {
   renderCityFilters();
   renderIdeas();
   renderLogistics();
-  setupNavigation();
 }
 
 // ---- Navigation ----
@@ -135,8 +137,8 @@ function renderIdeas() {
     card.className = "idea-card";
 
     const imgHtml = idea.photo
-      ? `<img class="idea-card-img" src="images/${escapeHtml(idea.photo)}" alt="${escapeHtml(idea.title)}" loading="lazy">`
-      : `<div class="idea-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:2rem;">📍</div>`;
+      ? `<img class="idea-card-img" src="images/${escapeHtml(idea.photo)}" alt="${escapeHtml(idea.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><div class="idea-card-img" style="display:none;align-items:center;justify-content:center;color:var(--text-dim);font-size:2rem;background:var(--bg-pill);">📍</div>`
+      : `<div class="idea-card-img" style="display:flex;align-items:center;justify-content:center;color:var(--text-dim);font-size:2rem;background:var(--bg-pill);">📍</div>`;
 
     const noteHtml = idea.note
       ? `<p class="idea-card-note">${escapeHtml(idea.note)}</p>`
