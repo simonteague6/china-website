@@ -1,9 +1,0 @@
-{
-  "name": "china-website",
-  "version": "1.0.0",
-  "private": true,
-  "devDependencies": {
-    "serverless": "^3.40.0",
-    "serverless-lift": "^1.35.0"
-  }
-}
