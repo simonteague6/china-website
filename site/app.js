@@ -97,7 +97,7 @@ function switchView(view) {
 // ---- City filter pills ----
 function renderCityFilters() {
   const container = document.getElementById("city-filters");
-  // Show unique city names (merge shanghai and shanghai-2)
+  // Show unique city names (merge duplicate city entries)
   const seen = new Set();
   data.cities.forEach(city => {
     const baseName = city.id.replace(/-\\d+$/, "");
@@ -131,7 +131,7 @@ function renderIdeas() {
   const feed = document.getElementById("idea-feed");
   feed.innerHTML = "";
 
-  // Filter: shanghai matches both shanghai and shanghai-2 ideas
+  // Filter: shanghai matches all shanghai entries
   const filtered = currentCity === "all"
     ? data.ideas
     : data.ideas.filter(i => {
@@ -393,8 +393,8 @@ function findCityForDay(dateStr) {
     "2026-05-27": "xian",
     "2026-05-28": "beijing",       // travel + arrive, sleep here
     "2026-05-29": "beijing",
-    "2026-05-30": "shanghai-2",    // travel + arrive, sleep here
-    "2026-05-31": "shanghai-2",
+    "2026-05-30": "shanghai",    // travel + arrive, sleep here
+    "2026-05-31": "shanghai",
   };
   return mapping[dateStr] || null;
 }

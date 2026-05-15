@@ -6,8 +6,8 @@
       "id": "shanghai",
       "name": "Shanghai",
       "nameZh": "上海",
-      "dates": "May 18–20",
-      "nights": 3,
+      "dates": "May 18–20 & May 31",
+      "nights": 4,
       "lat": 31.2304,
       "lng": 121.4737,
       "vibe": "",
@@ -56,17 +56,6 @@
       "lng": 116.4074,
       "vibe": "",
       "headsUp": ""
-    },
-    {
-      "id": "shanghai-2",
-      "name": "Shanghai",
-      "nameZh": "上海",
-      "dates": "May 31",
-      "nights": 1,
-      "lat": 31.2304,
-      "lng": 121.4737,
-      "vibe": "",
-      "headsUp": ""
     }
   ],
   "travelDays": [
@@ -74,22 +63,19 @@
     { "date": "2026-05-24", "from": "zhangjiajie", "to": "chongqing", "label": "Zhangjiajie → Chongqing", "detail": "Train — book a couple days ahead." },
     { "date": "2026-05-26", "from": "chongqing", "to": "xian", "label": "Chongqing → Xi'an", "detail": "Train — ~5hrs. Book a couple days ahead." },
     { "date": "2026-05-28", "from": "xian", "to": "beijing", "label": "Xi'an → Beijing", "detail": "Train — ~4.5hrs. Book a couple days ahead." },
-    { "date": "2026-05-30", "from": "beijing", "to": "shanghai-2", "label": "Beijing → Shanghai", "detail": "Train — ~4.5hrs. Book a couple days ahead." }
+    { "date": "2026-05-30", "from": "beijing", "to": "shanghai", "label": "Beijing → Shanghai", "detail": "Train — ~4.5hrs. Book a couple days ahead." }
   ],
   "ideas": [
-    { "title": "The Bund at night", "city": "shanghai", "note": "Skyline lit up across the river — go around 8pm", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=The+Bund+Shanghai" }, { "type": "instagram", "url": "https://instagram.com/explore/tags/thebund" }] },
-    { "title": "French Concession walk", "city": "shanghai", "note": "Wukang Road, Fuxing Road — tree-lined streets, cool architecture", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=French+Concession+Shanghai" }] },
-    { "title": "Yu Garden morning visit", "city": "shanghai", "note": "Go before the crowds hit. Morning tea nearby.", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Yu+Garden+Shanghai" }] },
-    { "title": "Rooftop drink at Flair", "city": "shanghai", "note": "Ritz-Carlton Pudong — best skyline view", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Flair+Rooftop+Shanghai" }, { "type": "website", "url": "https://www.ritzcarlton.com/en/hotels/china/shanghai-pudong/dining/flair" }] },
-    { "title": "Great Wall — Mutianyu", "city": "beijing", "note": "Less crowded than Badaling. Toboggan down!", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Mutianyu+Great+Wall" }] },
-    { "title": "Temple of Heaven at 7am", "city": "beijing", "note": "Locals doing tai chi — worth the early wake up", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Temple+of+Heaven+Beijing" }] },
-    { "title": "Peking duck at Siji Minfu", "city": "beijing", "note": "Go early or prepare to wait", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Siji+Minfu+Beijing" }] },
-    { "title": "Terracotta Warriors", "city": "xian", "note": "Hire a guide or audio guide — go at opening 8:30", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Terracotta+Warriors+Xian" }] },
-    { "title": "Muslim Quarter at sunset", "city": "xian", "note": "Street food, lanterns, pomegranate juice", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Muslim+Quarter+Xian" }] },
-    { "title": "Hot pot near Jiefangbei", "city": "chongqing", "note": "Ask hotel concierge for a local favourite", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Jiefangbei+Chongqing" }] },
-    { "title": "Hongya Cave at night", "city": "chongqing", "note": "Looks like Spirited Away when lit up", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Hongya+Cave+Chongqing" }] },
-    { "title": "Yuanjiajie — Avatar mountains", "city": "zhangjiajie", "note": "The floating pillar mountains that inspired Avatar", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Yuanjiajie+Zhangjiajie" }] },
-    { "title": "Zhangjiajie Grand Canyon glass bridge", "city": "zhangjiajie", "note": "Book ahead — can sell out", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Zhangjiajie+Glass+Bridge" }] }
+    { "title": "The Bund at night", "city": "shanghai", "photo": "the-bund.jpg", "note": "Skyline lit up across the river — go around 8pm", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=The+Bund+Shanghai" }, { "type": "instagram", "url": "https://instagram.com/explore/tags/thebund" }] },
+    { "title": "Yu Garden morning visit", "city": "shanghai", "photo": "yu-garden.jpg", "note": "Go before the crowds hit. Morning tea nearby.", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Yu+Garden+Shanghai" }] },
+    { "title": "Rooftop drink at Flair", "city": "shanghai", "photo": "flair-at-ritz-carlton.jpg", "note": "Ritz-Carlton Pudong — best skyline view", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Flair+Rooftop+Shanghai" }, { "type": "website", "url": "https://www.ritzcarlton.com/en/hotels/china/shanghai-pudong/dining/flair" }] },
+    { "title": "Great Wall — Mutianyu", "city": "beijing", "photo": "mutianyu-great-wall.jpg", "note": "Less crowded than Badaling. Toboggan down!", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Mutianyu+Great+Wall" }] },
+    { "title": "Temple of Heaven at 7am", "city": "beijing", "photo": "temple-of-heaven.webp", "note": "Locals doing tai chi — worth the early wake up", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Temple+of+Heaven+Beijing" }] },
+    { "title": "Terracotta Warriors", "city": "xian", "photo": "terracotta-warriors.jpg", "note": "Hire a guide or audio guide — go at opening 8:30", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Terracotta+Warriors+Xian" }] },
+    { "title": "Muslim Quarter at sunset", "city": "xian", "photo": "muslim-quarter.webp", "note": "Street food, lanterns, pomegranate juice", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Muslim+Quarter+Xian" }] },
+    { "title": "Hongya Cave at night", "city": "chongqing", "photo": "Hongya_Cave_at_night_from_Qiansimen_Bridge.jpg", "note": "Looks like Spirited Away when lit up", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Hongya+Cave+Chongqing" }] },
+    { "title": "Yuanjiajie — Avatar mountains", "city": "zhangjiajie", "photo": "yuanjiajie-ecstasy-terrace.jpg", "note": "The floating pillar mountains that inspired Avatar", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Yuanjiajie+Zhangjiajie" }] },
+    { "title": "Zhangjiajie Grand Canyon glass bridge", "city": "zhangjiajie", "photo": "zjj-glass-bridge.jpg", "note": "Book ahead — can sell out", "links": [{ "type": "maps", "url": "https://maps.google.com/?q=Zhangjiajie+Glass+Bridge" }] }
   ],
   "trains": [
     { "date": "2026-05-21", "from": "Shanghai", "to": "Zhangjiajie", "status": "not-booked" },
