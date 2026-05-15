@@ -262,14 +262,16 @@ function renderLogistics() {
       });
     });
 
-    // Travel days
-    const travel = (data.travelDays || []).find(t => t.date === dateStr);
-    if (travel) {
-      entries.push({
-        icon: "train-front",
-        title: travel.label,
-        detail: travel.detail,
-      });
+    // Travel days — only show if no train exists for this day
+    if (dayTrains.length === 0) {
+      const travel = (data.travelDays || []).find(t => t.date === dateStr);
+      if (travel) {
+        entries.push({
+          icon: "train-front",
+          title: travel.label,
+          detail: travel.detail,
+        });
+      }
     }
 
     // City context (where are we sleeping tonight?)
