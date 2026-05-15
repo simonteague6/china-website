@@ -278,7 +278,7 @@ function renderLogistics() {
     const cityId = findCityForDay(dateStr);
     if (cityId) {
       const city = data.cities.find(c => c.id === cityId);
-      if (city && entries.length === 0) {
+      if (city && (entries.length === 0 || dayTrains.length > 0)) {
         entries.push({
           icon: "map-pin",
           title: `${city.name}${city.nameZh ? ` ${city.nameZh}` : ""}`,
